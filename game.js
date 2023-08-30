@@ -1,19 +1,82 @@
-// Iteration 1: Declare variables required for this game
+// Add shotgun sound
+const game_body= document.getElementById("game-body")
+let shotgunSound= new Audio("./assets/shotgun.wav")
 
-// Iteration 1.2: Add shotgun sound
+game_body.onclick = ()=>{
+// shotgunSound.pause()
+shotgunSound.currentTime = 0
+shotgunSound.play()
+}
 
-// Iteration 1.3: Add background sound
+// Add background sound
 
-// Iteration 1.4: Add lives
+let bgm = new Audio("./assets/bgm.mp3")
+bgm.play()
+bgm.loop= true
 
-// Iteration 2: Write a function to make a zombie
 
-// Iteration 3: Write a function to check if the player missed a zombie
+//displaying of zombies from different positions and speed
+let zombie;
+let lives=5; 
+let zombieID = 0
+function generateZombies(){
 
-// Iteration 4: Write a function to destroy a zombie when it is shot or missed
+    let num=generateUniqueNums(1,7)
+    game_body.innerHTML+=`<img src=./assets/zombie-${num}.png  class=zombie-image id=Zombies${zombieID} >`
+    zombie=document.getElementById(`Zombies${zombieID}`)
+    let second = generateUniqueNums(2,7)
+    zombie.style.animationDuration= `${second}s`
+    let viewwidth = generateUniqueNums(20,80)
+    zombie.style.transform = `translateX(${viewwidth}vw)`
 
-// Iteration 5: Creating timer
+zombie.onclick = ()=>{
+    destroyZombie(zombie)
+}
+}
 
-// Iteration 6: Write a code to start the game by calling the first zombie
+generateZombies()
 
-// Iteration 7: Write the helper function to get random integer
+//random number to display random images
+function generateUniqueNums(min,max){
+    return Math.floor(Math.random()*(max-min))+min
+
+}
+
+function destroyZombie(ghost){
+    ghost.style.display= "none"
+    zombieID++
+    generateZombies()
+}
+
+// to check if zombie has crossed our view
+
+let time=60
+function Escapezombie(zombie){
+
+    if(zombie.getBoundingClientRect().top<=0){
+        lives--
+        if(lives<=0){
+            location.href="game-over.html"
+        }
+        else{
+            destroyZombie(zombie)
+        }
+       
+    }
+}
+
+//timer
+
+setInterval(timer,1000)
+
+function timer(){
+    if(time<=0){
+        location.href = "win.html"
+    }
+    else{
+        time--
+        document.getElementById("timer").innerText = time
+        Escapezombie(zombie)
+    }
+}
+

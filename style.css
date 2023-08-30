@@ -86,7 +86,7 @@ body {
     position: absolute;
     bottom: -100px;
     border-radius: 50%;
-    opacity: 0.5;
+    opacity:0.5;
     animation: flying 5s infinite ease-in;
     z-index: 2;
     width: 30vw;
