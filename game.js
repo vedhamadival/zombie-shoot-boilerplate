@@ -17,7 +17,7 @@ bgm.loop= true
 
 //displaying of zombies from different positions and speed
 let zombie;
-let lives=5; 
+
 let zombieID = 0
 function generateZombies(){
 
@@ -50,10 +50,14 @@ function destroyZombie(ghost){
 
 // to check if zombie has crossed our view
 
+let maxlife=document.getElementById("max-lives")
+let lives=4; 
 let time=60
 function Escapezombie(zombie){
-
+    let width = 100
     if(zombie.getBoundingClientRect().top<=0){
+        width -= 25
+        document.getElementById("lives").style.width = `${width}%`
         lives--
         if(lives<=0){
             location.href="game-over.html"
